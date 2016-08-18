@@ -2,7 +2,7 @@ describe("Person", function() {
   var person;
 
   beforeEach(function() {
-    person = new Person({weight: 90, height: 186});
+    person = new Person({system: 'metric', weight: 90, height: 186});
   });
 
   it("should have weight of 90", function() {
@@ -28,7 +28,7 @@ describe("Person using imperial system", function() {
   var person;
 
   beforeEach(function() {
-    person = new Person({weight_in_lbs: 176, height_in_feet: 5, height_in_inches: 9});
+    person = new Person({system: 'imperial', weight_in_lbs: 176, height_in_feet: 5, height_in_inches: 9});
   });
 
   it("should have weight of 176", function() {
