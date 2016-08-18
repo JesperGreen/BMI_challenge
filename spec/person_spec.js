@@ -23,3 +23,28 @@ describe("Person", function() {
     expect(person.bmiMessage).toEqual("Overweight")
   });
 });
+
+describe("Person using imperial system", function() {
+  var person;
+
+  beforeEach(function() {
+    person = new Person({weight_in_lbs: 176, height_in_feet: 5, height_in_inches: 9});
+  });
+
+  it("should have weight of 176", function() {
+    expect(person.weight_in_lbs).toEqual(176);
+  });
+
+  it("should have height feet", function() {
+    expect(person.height_in_feet).toEqual(5);
+  });
+
+  it("should have height in inches", function() {
+    expect(person.height_in_inches).toEqual(9);
+  });
+
+  it("should have a BMI Message", function() {
+    person.calculate_bmi();
+    expect(person.bmiMessage).toEqual("Overweight")
+  });
+});
