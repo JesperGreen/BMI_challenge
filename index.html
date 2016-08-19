@@ -3,26 +3,21 @@
   <head>
     <meta charset="utf-8">
     <title></title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.1.1/foundation.min.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
     <script src="src/person.js"></script>
     <script src="src/bmi_calculator.js"></script>
     <script src='https://code.jquery.com/jquery-2.1.4.js'></script>
-    <script type="text/javascript">
-      $(document).ready(function () {
-        $('#calculate').click(function () {
-          var w = parseFloat($('#weight').val());
-          var h = parseFloat($('#height').val());
-          var person = new Person({weight: w, height: h});
-          person.calculate_bmi();
-          $('#display_value').html('Your BMI is ' + person.bmiValue);
-          $('#display_message').html('and you are '+ person.bmiMessage);
-        });
-      });
-    </script>
   </head>
   <body>
     <form>
+      Metric <input type="radio" id="metric" name="unit" value="metric">
+      <input type="radio" id="imperial" name="unit" value="imperial"> Imperial
       <input type="text" id="weight" placeholder="Weight">
       <input type="text" id="height" placeholder="Height">
+      <input type="text" id="w-lbs" placeholder="Weight in lbs">
+      <input type="text" id="h-feet" placeholder="Height in feet">
+      <input type="text" id="h-inches" placeholder="Height in inches">
       <input type="button" id="calculate" value="Calculate">
     </form>
     <div>
@@ -30,5 +25,34 @@
       <span id="display_message"></span>
 
     </div>
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $('#calculate').click(function () {
+          var u = $('input[name="unit"]:checked').val();
+
+        var person = null;
+        var calculator = new BMICalculator();
+
+         if (u == 'metric') {
+           var w = parseFloat($('#weight').val());
+           var h = parseFloat($('#height').val());
+           person = new Person({weight: w, height: h, system: u});
+           person.calculate_bmi();
+           $('#display_value').html('Your BMI is ' + person.bmiValue);
+           $('#display_message').html('and you are '+ person.bmiMessage);
+         } else if (u == 'imperial') {
+           var lbs = parseFloat($('#w-lbs').val())
+           var feet = parseFloat($('#h-feet').val())
+           var inches = parseFloat($('#h-inches').val())
+           person = new Person({weight_in_lbs: lbs, height_in_feet: feet, height_in_inches: inches, system: u});
+           person.calculate_bmi();
+           $('#display_value').html('Your BMI is ' + person.bmiValue);
+           $('#display_message').html('and you are '+ person.bmiMessage);
+         } else {
+           console.log ('Please select a unit');
+         }
+        });
+      });
+    </script>
   </body>
 </html>
